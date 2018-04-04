@@ -1,0 +1,56 @@
+<!doctype html> 
+<html> 
+<head>
+	<title>WebSocket Demo</title> 
+	<style>  
+	  /* define some CSS styling on page elements */ 
+	  #txtInput {width: 85%; height: 60px; float:left; padding: 10px;}   
+	  #cmdInput {margin-left: 10px; width:10%; height:80px; font-weight: bold;} 
+	  #txtOutput {width: 96%; height: 300px; font-family: courier new; padding: 10px; border: 1px solid gray; margin-top: 10px; overflow:auto;} 
+	</style> 
+</head> 
+
+<body> 
+  <textarea id="txtInput" placeholder="q)"></textarea> 
+  <button id="cmdInput" onclick="send();">Go</button> 
+  <div id="txtOutput"></div> 
+</body> 
+
+<script> 
+	var ws, cmd = ""; 
+	var input=document.getElementById("txtInput");   
+	var output=document.getElementById("txtOutput");   
+	function connect(){   
+	  if ("WebSocket" in window) {       
+		ws = new WebSocket("ws://localhost:5001/");       
+		output.value="connecting...";       
+		
+		ws.onopen=function(e){output.innerHTML="connected";}        
+		ws.onclose=function(e){output.innerHTML="disconnected";}       
+		ws.onerror=function(e){output.value=e.data;} 
+		
+		/* when a message is received, prepend the message to the display area along with the input command  */
+		ws.onmessage=function(e){ 
+			/* the message is in plain text, so we need to convert ‘ ’ to ‘&nbsp’ and ‘\n’ to ‘<br />’ in order to display spaces and newlines correctly within the HTML markup*/
+			var formattedResponse = e.data.replace(/ /g, '&nbsp').replace(/\n/g, '<br />'); 
+			output.innerHTML = cmd + formattedResponse + output.innerHTML; 
+			cmd="";  
+		} 
+		  
+	  } else alert("WebSockets not supported on your browser."); 
+	}   
+
+	function send(){ 
+	/* store the input command so that we can access it later to print in with the response */
+	cmd = "q)" + input.value + "<br />"; 
+	/* send the input command across the WebSocket connection  */
+	ws.send(input.value); 
+	/* reset the input test box to empty, and focus the cursor back on it ready for the next input */    
+	input.value=""; 
+	input.focus(); 
+	} 
+       
+       connect(); //call the connect function
+
+</script> 
+</html>
