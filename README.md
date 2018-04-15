@@ -1,13 +1,15 @@
-The code in this repo is to be used in conjuction with the kdb+ and WebSockets Whitepaper 
+The code to accompany the kdb+ and WebSockets Whitepaper 
 
 Appendix A
 ----------
-Start a q process and set it to listen on port 5001 <br></br>
-Set the .z.ws message handler using the following -->  .z.ws:{neg[.z.w] -8! @[value;x;{`$ "'",x}]}   <br></br>
-Open SimpleDemo.html in a web browser to view the web console example  <br></br>
+
+1.  Start a q process and set it to listen on port 5001.
+2.  Set the `.z.ws` message handler using ``.z.ws:{neg[.z.w] -8! @[value;x;{`$ "'",x}]}``.
+3.  Open `SimpleDemo.html` in a web browser to view the web console example.
 
 Appendix B
 ----------
-Start a q process that loads in the pubsub.q script  <br></br>
-Start a second q process that loads in the fh.q script  <br></br>
-Open websockets.html in a web browser to show tables updating in real time via a websocket connection  <br></br>
+
+1.  Start a q process that loads the `pubsub.q` script.
+2.  Start a second q process that loads the `fh.q` script.
+3.  Open `websockets.html` in a web browser to show tables updating in real time via a websocket connection.
