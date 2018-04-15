@@ -1,4 +1,4 @@
-The code to accompany the kdb+ and WebSockets Whitepaper 
+Code to accompany the kdb+ and WebSockets whitepaper 
 
 Appendix A
 ----------
